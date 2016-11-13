@@ -64,7 +64,7 @@ neigh.fit(X, labels)
 
 def classifyNewArticle(url):
     # get article text
-    newsArticle = Article(url="http://nypost.com/2016/11/11/scenes-from-the-liberal-meltdown/")
+    newsArticle = Article(url=url)
     newsArticle.download()
     newsArticle.parse()
     news = newsArticle.text.replace('\n', ' ')
