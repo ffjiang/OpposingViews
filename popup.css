@@ -2,6 +2,15 @@ body {
         width: 400px;
 }
 
-h4 {
+h4 media-heading {
   margin-top: 25px;
+}
+
+.source {
+  color: #C8C8C8;
+}
+
+.media-body p {
+  max-height: 50px;
+  text-overflow: ellipsis;
 }

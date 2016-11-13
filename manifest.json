@@ -11,6 +11,7 @@
   },
   "permissions": [
     "activeTab",
+    "tabs",
     "http://ec2-35-160-7-63.us-west-2.compute.amazonaws.com:8080/*"
   ]
 }
