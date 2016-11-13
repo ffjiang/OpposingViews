@@ -3,6 +3,7 @@ from urllib.parse import urlparse, parse_qs
 import urllib
 import newspaper
 import json
+import topics
 
 PORT_NUMBER = 8080
 
@@ -37,9 +38,14 @@ class myHandler(BaseHTTPRequestHandler):
                 responseArticle = newspaper.Article(url=url, language='en')
                 responseArticle.download()
                 responseArticle.parse()
-                response.append({'url': url, 'title': responseArticle.title, 
-                                 'content': responseArticle.text})
+                response.append({'url': url, 
+                                 'source': 'CNN',
+                                 'title': responseArticle.title, 
+                                 'authors': responseArticle.authors,
+                                 'content': responseArticle.text,
+                                 'topImage': responseArticle.top_image})
 
+            #topics.getKeyPhrases(article.text)
 
             # Send the html message
             self.wfile.write(json.dumps(response).encode('utf-8'))
