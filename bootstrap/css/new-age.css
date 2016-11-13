@@ -182,8 +182,9 @@ header .header-content .header-content-inner .list-badges img {
   margin-bottom: 25px;
 }
 header .device-container {
-  max-width: 300px;
+  max-width: 500px;
   margin: 0 auto 100px;
+  margin-top: 200px;
 }
 header .device-container .screen img {
   border-radius: 3px;
@@ -264,7 +265,7 @@ section.features .section-heading p {
 }
 section.features .device-container,
 section.features .feature-item {
-  max-width: 300px;
+  max-width: 500px;
   margin: 0 auto;
 }
 section.features .device-container {
