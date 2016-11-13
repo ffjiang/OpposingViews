@@ -27,9 +27,10 @@ function getOpposingViewURLs(url) {
     var resp = JSON.parse(xhttp.responseText);
     news_snippets = '';
     for (i = 0; i < resp.length; i++) {
-      news_snippets += '<div class="media"><div class="media-body"><h4 class="media-heading">'
+      news_snippets += '<div class="media"><div class="media-left"><img class="media-object" src="' + resp[i].topImage + '" style="width: 64px; height: 64px;"></div>'
+        + '<div class="media-body"><a href="' + resp[i].url + '"><h4 class="media-heading">'
         + resp[i].title
-        + '</h4>'
+        + '</h4></a><h4 class="source">' + resp[i].source + '</h4>'
         + '<p>' + resp[i].content
         + '</div></div>';
     }
