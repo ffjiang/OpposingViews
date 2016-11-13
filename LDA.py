@@ -29,14 +29,15 @@ def preprocess(text, vectorizer=None):
 
 
 def getLDAModel():
-    lda = sklearn.decomposition.LatentDirichletAllocation(n_topics=20, max_iter = 20)
+    lda = sklearn.decomposition.LatentDirichletAllocation(n_topics=10, max_iter = 30)
     with open('news.tsv') as f:
         news = f.read()
         (tf, tf_vectorizer) = preprocess(news)
         tf_feature_names = tf_vectorizer.get_feature_names()
         lda.fit(tf)
+        transformed = lda.transform(tf)
         print_top_words(lda, tf_feature_names, 20)
-    return (lda, tf_vectorizer)
+    return (lda, tf_vectorizer, transformed)
 
 
 
