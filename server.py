@@ -4,6 +4,7 @@ import urllib
 import newspaper
 import json
 import topics
+from os import curdir
 
 PORT_NUMBER = 8080
 
@@ -33,6 +34,9 @@ class myHandler(BaseHTTPRequestHandler):
             article.download()
             article.parse()
             
+            print(article.text)
+            print('-------------------------------------------------')
+            #topics.getArticleTopic(article.text[:100])
             response = []
             for url in sampleURLs:
                 responseArticle = newspaper.Article(url=url, language='en')
@@ -50,8 +54,10 @@ class myHandler(BaseHTTPRequestHandler):
             # Send the html message
             self.wfile.write(json.dumps(response).encode('utf-8'))
         else:
-            self.wfile.write(bytes("Pass an article URL", 'utf-8'))
-        return
+            # Handle files
+            f = open(curdir + self.path, 'rb')
+            print('Serving ' + curdir + self.path)
+            self.wfile.write(f.read())
 
 try:
     server = HTTPServer(('', PORT_NUMBER), myHandler)
