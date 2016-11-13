@@ -3,7 +3,6 @@ from sklearn.feature_extraction.text import CountVectorizer
 import scipy.sparse
 import os
 import numpy as np
-from nltk.corpus import stopwords
 import string
 
 def print_top_words(model, feature_names, n_top_words):
@@ -12,21 +11,32 @@ def print_top_words(model, feature_names, n_top_words):
         print(' '.join([feature_names[i]
                         for i in topic.argsort()[:-n_top_words - 1:-1]]))
 
-stopwordsList = stopwords.words('english')
+#stopwordsList = stopwords.words('english')
 translator = str.maketrans({key: None for key in string.punctuation})
+
+def preprocess(text, vectorizer=None):
+    text.translate(translator)
+    tf_vectorizer = None
+    if vectorizer:
+        tf_vectorizer = CountVectorizer(max_df=0.95, min_df=2, max_features = 20000, vocabulary=vectorizer.vocabulary_)
+    else:
+        tf_vectorizer = CountVectorizer(max_df=0.95, min_df=2, max_features = 20000, stop_words='english')
+
+    splitText = text.split('\n')
+    tf_vectorizer.fit(splitText)
+    tf = tf_vectorizer.transform(splitText)
+    return (tf, tf_vectorizer)
 
 
 def getLDAModel():
     lda = sklearn.decomposition.LatentDirichletAllocation(n_topics=20, max_iter = 20)
     with open('news.tsv') as f:
         news = f.read()
-        news.translate(translator)
-        tf_vectorizer = CountVectorizer(max_df=0.95, min_df=2, max_features = 20000, stop_words='english')
-        tf = tf_vectorizer.fit_transform(news.split('\n'))
-        lda.fit(tf)
+        (tf, tf_vectorizer) = preprocess(news)
         tf_feature_names = tf_vectorizer.get_feature_names()
+        lda.fit(tf)
         print_top_words(lda, tf_feature_names, 20)
-    return lda
+    return (lda, tf_vectorizer)
 
 
 

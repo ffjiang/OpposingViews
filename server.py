@@ -4,6 +4,7 @@ import urllib
 import newspaper
 import json
 import topics
+import LDA
 from os import curdir
 
 PORT_NUMBER = 8080
@@ -34,9 +35,9 @@ class myHandler(BaseHTTPRequestHandler):
             article.download()
             article.parse()
             
-            print(article.text)
-            print('-------------------------------------------------')
-            #topics.getArticleTopic(article.text[:100])
+            text = article.text.replace('\n', ' ')
+            #(lda, tf_vectorizer) = LDA.getLDAModel()
+            #topics.getArticleTopicSK(text, lda, tf_vectorizer)
             response = []
             for url in sampleURLs:
                 responseArticle = newspaper.Article(url=url, language='en')
