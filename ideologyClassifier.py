@@ -32,7 +32,7 @@ counter = 0
 indptr.append(0)
 numLines = -1
 lines = []
-with open('newsText.txt') as f:
+with open('news.tsv') as f:
     news = f.read()
     news.translate(translator)
     lines = news.split('\n')
@@ -62,12 +62,14 @@ labels = np.concatenate((left, right), axis=0)
 neigh = KNeighborsClassifier(n_neighbors=5)
 neigh.fit(X, labels)
 
-def classifyNewArticle(url):
+def classifyNewArticle(news):
+    '''
     # get article text
     newsArticle = Article(url="http://nypost.com/2016/11/11/scenes-from-the-liberal-meltdown/")
     newsArticle.download()
     newsArticle.parse()
     news = newsArticle.text.replace('\n', ' ')
+    '''
 
     # create feature vector
     data = []

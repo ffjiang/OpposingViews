@@ -5,6 +5,7 @@ import newspaper
 import json
 import topics
 import LDA
+import re
 from os import curdir, path
 
 PORT_NUMBER = 8080
@@ -50,8 +51,13 @@ class myHandler(BaseHTTPRequestHandler):
                 responseArticle = newspaper.Article(url=newsURL, language='en')
                 responseArticle.download()
                 responseArticle.parse()
+                source = ''
+                if re.match('nytimes', newsURL):
+                    source = 'New York Times'
+                elif re.match('foxnews', newsURL):
+                    source = 'Fox News'
                 response.append({'url': newsURL, 
-                                 'source': 'CNN',
+                                 'source': source,
                                  'title': responseArticle.title, 
                                  'authors': responseArticle.authors,
                                  'content': similarArticle,

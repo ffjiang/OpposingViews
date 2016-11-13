@@ -78,7 +78,7 @@ def getArticleTopicSK(text, model, vectorizer, transformed):
     print(' '.join([tf_feature_names[i]
                         for i in model.components_[maxIndex].argsort()[:-19:-1]]))
 
-    leftAligned = False
+    leftAligned = True
 
     # Select two from the opposite end of political spectrum and one from the
     # same
